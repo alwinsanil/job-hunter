@@ -1,0 +1,13 @@
+# Intermediate daily dumps — regenerated every run, no need to version them
+data/raw/
+data/scored/
+data/verified/
+
+# Keep: data/final/ (scored results), data/seen_postings.json (dedup cache),
+# digests/ (the thing you actually read) — these should stay committed.
+
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/

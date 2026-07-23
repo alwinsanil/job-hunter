@@ -1,0 +1,7 @@
+requests>=2.31
+pyyaml>=6.0
+
+# Optional — only needed if you enable the headless-browser fallback in
+# score.py for JS-rendered Workday/SuccessFactors pages. See score.py's
+# fetch_jd_text() docstring for setup instructions.
+# playwright>=1.44
