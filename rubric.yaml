@@ -1,0 +1,103 @@
+# rubric.yaml — scoring config for job-hunt system
+# Edit weights as you get signal from real applications (see "rubric drift" extension)
+
+profile:
+  years_experience: 1.5   # Lindner (16mo) + ChangeMakers (5mo), rounded down for safety
+  location: Halifax, NS, Canada
+  work_auth: canada_only_no_sponsorship
+  target_titles: [Software Engineer, DevOps Engineer, SRE, Site Reliability Engineer, Platform Engineer]
+  seniority: new_grad_early_career
+
+# NOTE: title_prefilter.py runs BEFORE any of this — it's a free keyword
+# filter that drops VP/SVP/Director/Senior titles and non-engineering
+# functions (Sales, Marketing, Legal, HR, etc.) before a posting ever
+# reaches verification or the paid scoring step below. Toggle SENIOR_ALLOWED
+# in title_prefilter.py (not here — that file isn't YAML-driven) if you
+# decide to let "Senior" titles through for scoring instead of hard-excluding.
+
+base_score: 50
+
+# NOTE: everything below hard_caps IS live-read by score.py (profile, stack_match,
+# ramp_up_penalty, bonus, location_bonus, tiers all drive the actual score math).
+#
+# hard_caps below is NOT parsed — the "if:" lines are documentation only.
+# The real cap logic is hardcoded in score.py's compute_score() function.
+# If you change a threshold here (e.g. 40 -> 45), you must also edit the
+# matching number in compute_score(), or they'll silently drift apart.
+hard_caps:
+  - name: overqualified_years
+    if: years_required > years_experience + 1.5
+    action: cap_score_at 40
+    reason: "Posting wants meaningfully more experience than you have"
+
+  - name: sponsorship_mismatch
+    if: posting_requires_existing_us_work_auth OR posting_denies_sponsorship_and_not_ca_eligible
+    action: cap_score_at 15
+    reason: "Can't legally take the role"
+
+  - name: seniority_mismatch
+    if: title_contains [Senior, Staff, Principal, Lead, Director]
+    action: cap_score_at 35
+    reason: "Title signals level above new grad, likely to reject on experience alone"
+
+  - name: no_canada_remote_or_onsite
+    if: location_excludes_canada AND not_remote
+    action: cap_score_at 10
+    reason: "Can't relocate without sponsorship, can't work onsite outside Canada"
+
+stack_match:
+  weight_max: 25
+  points_per_hit: 3
+  strong_signals:
+    languages: [JavaScript, TypeScript, Java, Python, SQL]
+    frameworks: [React, Next.js, Node.js, Express, Spring Boot, FastAPI]
+    cloud: [AWS, Azure, Docker, Kubernetes, Terraform]
+    data: [PostgreSQL, MongoDB, DynamoDB]
+    practices: [CI/CD, GitHub Actions, REST, GraphQL, Agile]
+
+ramp_up_penalty:
+  weight_max: -15
+  points_per_hit: -5
+  unfamiliar_platforms:
+    - Go
+    - Rust
+    - GCP
+    - Jenkins
+    - Kafka
+    - PagerDuty / heavy on-call rotation
+    - .NET / C#
+  note: "Not disqualifying — just flags real ramp time, lowers apply-first priority"
+
+bonus:
+  ai_in_daily_workflow: +8      # matches your existing Claude Code / Cursor daily use
+  accessibility_or_wcag_mentioned: +4    # direct match to ChangeMakers WCAG 2.1 AA work
+  referral_possible_changemakers_network: +5   # flag if company overlaps VP/Sr Dev contacts
+  small_team_full_ownership: +3   # matches "sole developer" pattern you've thrived in
+
+company_signal:
+  weight_max: 10
+  funding_series_b_plus: +3
+  glassdoor_rating_gt_4: +2
+  hiring_new_grads_explicitly: +5
+
+location_bonus:
+  weight_max: 8
+  remote_canada: +8       # top pick - no relocation, no commute
+  halifax_ns_onsite: +5   # second pick - home base, no relocation cost
+  other_canada_onsite: +0 # neutral - open to it, no bonus/penalty
+  outside_canada: cap_score_at 10   # already covered by sponsorship_mismatch cap above
+
+tiers:
+  apply_first: ">=75"
+  worth_a_look: "50-74"
+  skip: "<50"
+
+output_fields:
+  - company
+  - title
+  - url
+  - final_score
+  - tier
+  - triggered_caps
+  - matched_stack
+  - notes
