@@ -1,0 +1,24 @@
+company,ats_type,board_token,careers_url,category,location_type,notes
+StackAdapt,greenhouse,stackadapt,https://job-boards.greenhouse.io/stackadapt,tech,canada_wide,"CONFIRMED by user - adtech, Toronto HQ"
+Clear,greenhouse,clear,https://job-boards.greenhouse.io/clear,tech,canada_wide,CONFIRMED by user - verify industry/location
+Wealthsimple,ashby,wealthsimple,https://jobs.ashbyhq.com/wealthsimple,tech,canada_wide,CONFIRMED by user - CORRECTED from earlier wrong guess (lever)
+Caylent,greenhouse,caylent,https://job-boards.greenhouse.io/caylent,tech,canada_wide,"CONFIRMED by user - AWS consulting, strong stack match"
+Cohere,ashby,cohere,https://jobs.ashbyhq.com/cohere,tech,canada_wide,CONFIRMED by user - Toronto AI company
+1Password,ashby,1password,https://jobs.ashbyhq.com/1password,tech,canada_wide,CONFIRMED via first live test run - 64 postings found
+Hopper,ashby,hopper,https://jobs.ashbyhq.com/hopper,tech,canada_wide,CONFIRMED by user - Montreal travel tech
+Neo Financial,ashby,neofinancial,https://jobs.ashbyhq.com/neofinancial,tech,canada_wide,CONFIRMED by user - CORRECTED from earlier custom guess
+Ideogram,ashby,ideogram,https://jobs.ashbyhq.com/ideogram,tech,canada_wide,CONFIRMED by user - Toronto AI/image gen
+Relay,ashby,relay,https://jobs.ashbyhq.com/relay,tech,canada_wide,CONFIRMED by user - verify industry
+Tailscale,greenhouse,tailscale,https://job-boards.greenhouse.io/tailscale,tech,canada_wide,"CONFIRMED by user - networking/infra, strong DevOps stack overlap"
+Colab Software,greenhouse,colabsoftware,https://job-boards.greenhouse.io/colabsoftware,tech,halifax_ns,"CONFIRMED by user - Newfoundland-based CAD collab tool, Atlantic Canada"
+Cardata,greenhouse,cardata,https://job-boards.greenhouse.io/cardata,tech,canada_wide,CONFIRMED by user - verify location
+Jane App,ashby,jane,https://jobs.ashbyhq.com/jane,tech,canada_wide,CONFIRMED by user - CORRECTED from earlier custom guess
+Benevity,ashby,benevity,https://jobs.ashbyhq.com/benevity,tech,canada_wide,CONFIRMED by user - CORRECTED from earlier wrong greenhouse guess
+Trulioo,ashby,trulioo,https://jobs.ashbyhq.com/trulioo,tech,canada_wide,CONFIRMED by user - CORRECTED from earlier wrong lever guess
+Later,greenhouse,later,https://job-boards.greenhouse.io/later,tech,canada_wide,CONFIRMED by user - CORRECTED token from earlier wrong guess latermedia
+Koho,ashby,koho,https://jobs.ashbyhq.com/koho,tech,canada_wide,CONFIRMED by user - CORRECTED from earlier wrong greenhouse guess
+Magnet Forensics,lever,magnetforensics,https://jobs.lever.co/magnetforensics,tech,canada_wide,"CONFIRMED by user - Waterloo HQ, digital forensics"
+Klue,ashby,klue,https://jobs.ashbyhq.com/klue,tech,canada_wide,CONFIRMED via first live test run - 9 postings found
+Hootsuite,greenhouse,hootsuite,https://boards.greenhouse.io/hootsuite,tech,canada_wide,CONFIRMED via first live test run - 13 postings found
+Borrowell,custom,,https://apply.workable.com/borrowell/,tech,canada_wide,On Workable ATS - not supported in this phase (GH/Lever/Ashby only). Revisit when Workable fetcher gets built.
+REDspace,custom,,https://apply.workable.com/redspace,tech,halifax_ns,"On Workable ATS - not supported in this phase. Halifax-based, worth prioritizing when Workable support added."
