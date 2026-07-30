@@ -5,7 +5,7 @@ profile:
   years_experience: 1.5   # Lindner (16mo) + ChangeMakers (5mo), rounded down for safety
   location: Halifax, NS, Canada
   work_auth: canada_only_no_sponsorship
-  target_titles: [Software Engineer, DevOps Engineer, SRE, Site Reliability Engineer, Platform Engineer]
+  target_titles: [Software Engineer, Software Developer, Full-Stack Developer, Front-End Developer, Back-End Developer, Cloud]
   seniority: new_grad_early_career
 
 # NOTE: title_prefilter.py runs BEFORE any of this — it's a free keyword
@@ -64,9 +64,13 @@ ramp_up_penalty:
     - GCP
     - Jenkins
     - Kafka
-    - PagerDuty / heavy on-call rotation
-    - .NET / C#
-  note: "Not disqualifying — just flags real ramp time, lowers apply-first priority"
+    - PagerDuty
+    - .NET
+    - C#
+  note: "Not disqualifying — just flags real ramp time, lowers apply-first priority.
+    Kept as separate single terms, not compound phrases — a JD is never going
+    to write '.NET / C#' as one literal joined string, so a compound entry
+    here would silently never match anything real."
 
 bonus:
   ai_in_daily_workflow: +8      # matches your existing Claude Code / Cursor daily use

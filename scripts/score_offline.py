@@ -121,8 +121,30 @@ def _keyword_present(term, text):
     regardless of whether the role actually touches Go. Lookaround
     (rather than \\b) handles terms with punctuation cleanly too
     (e.g. '.NET / C#', 'CI/CD')."""
-    pattern = r"(?<![A-Za-z0-9])" + re.escape(term) + r"(?![A-Za-z0-9])"
-    return re.search(pattern, text, re.IGNORECASE) is not None
+    variants = KEYWORD_SYNONYMS.get(term, [term])
+    for variant in variants:
+        pattern = r"(?<![A-Za-z0-9])" + re.escape(variant) + r"(?![A-Za-z0-9])"
+        if re.search(pattern, text, re.IGNORECASE):
+            return True
+    return False
+
+KEYWORD_SYNONYMS = {
+    "REST": ["REST", "RESTful"],
+    "Kubernetes": ["Kubernetes", "K8s"],
+    "PostgreSQL": ["PostgreSQL", "Postgres"],
+    "JavaScript": ["JavaScript", "JS"],
+    "Node.js": ["Node.js", "Node", "NodeJS"],
+    "React": ["React", "ReactJS", "React.js"],
+    "TypeScript": ["TypeScript", "TS"],
+    "C#": ["C#", "C Sharp"],
+    ".NET": [".NET", "DotNet"],
+    "CI/CD": ["CI/CD", "Continuous Integration", "Continuous Delivery"],
+    "AWS": ["AWS", "Amazon Web Services"],
+    "GCP": ["GCP", "Google Cloud Platform"],
+    "Azure": ["Azure", "Microsoft Azure"],
+    "Docker": ["Docker", "Containerization"],
+    "Terraform": ["Terraform", "Infrastructure-as-Code", "IaC", "I-a-C"],
+}
 
 
 def extract_facts_offline(posting, rubric):
