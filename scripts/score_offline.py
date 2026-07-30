@@ -113,13 +113,25 @@ def classify_seniority(title):
     return "new_grad"  # title_prefilter.py already filtered out the obvious mismatches upstream
 
 
+def _keyword_present(term, text):
+    """Word-boundary match, not bare substring. Bare re.escape(term) was
+    matching 'Go' (the ramp-up penalty item) inside 'going', 'goals',
+    'good', 'ongoing' — ordinary English, present in nearly every JD —
+    which was silently applying a -5 penalty to almost every posting
+    regardless of whether the role actually touches Go. Lookaround
+    (rather than \\b) handles terms with punctuation cleanly too
+    (e.g. '.NET / C#', 'CI/CD')."""
+    pattern = r"(?<![A-Za-z0-9])" + re.escape(term) + r"(?![A-Za-z0-9])"
+    return re.search(pattern, text, re.IGNORECASE) is not None
+
+
 def extract_facts_offline(posting, rubric):
     jd_text = get_jd_text(posting)
     stack_list = sum(rubric["stack_match"]["strong_signals"].values(), [])
     ramp_list = rubric["ramp_up_penalty"]["unfamiliar_platforms"]
 
-    matched_stack = [s for s in stack_list if re.search(re.escape(s), jd_text, re.IGNORECASE)]
-    unfamiliar = [s for s in ramp_list if re.search(re.escape(s), jd_text, re.IGNORECASE)]
+    matched_stack = [s for s in stack_list if _keyword_present(s, jd_text)]
+    unfamiliar = [s for s in ramp_list if _keyword_present(s, jd_text)]
 
     return {
         "years_required": extract_years(jd_text),

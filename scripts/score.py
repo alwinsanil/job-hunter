@@ -44,16 +44,43 @@ def get_jd_text(posting):
     have this — i.e. web_search_fallback / regional_board sourced postings,
     which never had a structured API response to pull from."""
     raw = posting.get("raw", {})
-    html = raw.get("jd_html", "")
+    html_content = raw.get("jd_html", "")
     plain = raw.get("jd_plain", "")
+    lists_raw = raw.get("jd_lists_raw", [])
 
     if plain:
         text = plain
-    elif html:
-        text = re.sub(r"<[^>]+>", " ", html)
+    elif html_content:
+        # Greenhouse (and possibly others) return entity-escaped HTML inside
+        # the JSON string — literal "&lt;div&gt;" rather than "<div>". The
+        # tag-stripping regex below only matches real < > characters, so
+        # without unescaping first, tags never get removed and the extracted
+        # text is full of visible tag noise instead of clean prose.
+        import html as html_module
+        unescaped = html_module.unescape(html_content)
+        text = re.sub(r"<[^>]+>", " ", unescaped)
         text = re.sub(r"\s+", " ", text).strip()
     else:
         text = ""
+
+    # Lever splits JD content into description (just the company intro
+    # blurb) + a separate structured "lists" array holding the actual
+    # substance — requirements, tech stack, nice-to-haves. Without this,
+    # get_jd_text() was silently returning only the generic company intro
+    # and missing every real requirement/tech-stack line in the posting,
+    # which is exactly why Magnet Forensics postings scored with zero
+    # stack matches despite the JD listing .NET, C#, AWS, React, Python,
+    # Docker, and Kubernetes further down.
+    if lists_raw:
+        import html as html_module
+        section_texts = []
+        for section in lists_raw:
+            heading = section.get("text", "")
+            content_html = section.get("content", "")
+            content_plain = re.sub(r"<[^>]+>", " ", html_module.unescape(content_html))
+            content_plain = re.sub(r"\s+", " ", content_plain).strip()
+            section_texts.append(f"{heading}: {content_plain}")
+        text = f"{text} {' '.join(section_texts)}".strip()
 
     if len(text) >= 200:
         return text[:JD_MAX_CHARS]

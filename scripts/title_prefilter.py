@@ -55,21 +55,32 @@ FUNCTION_EXCLUDE = [
     r"quality assurance engineer", r"\bqa\b(?!.*engineer.*automation)",  # generic QA excluded, automation QA still fuzzy
 ]
 
+import yaml
+from pathlib import Path
+
+def _load_target_titles():
+    """rubric.yaml's profile.target_titles is the real source of truth
+    for what counts as a target function. This returns a list of regex patterns to match against job titles."""
+    rubric_path = Path(__file__).resolve().parent.parent / "rubric.yaml"
+    rubric = yaml.safe_load(rubric_path.read_text(encoding="utf-8"))
+    titles = rubric.get("profile", {}).get("target_titles", [])
+    # Turn each plain-English title into a loose regex: spaces/hyphens are
+    # interchangeable, word-boundaried so "SRE" doesn't match inside another word.
+    patterns = []
+    for t in titles:
+        escaped = re.escape(t).replace(r"\ ", r"[\s-]?").replace(r"\-", r"[\s-]?")
+        patterns.append(rf"\b{escaped}\b" if len(t) <= 4 else escaped)
+    return patterns
+
+
 # Must match at least one of these to be considered a plausible target role.
-# This is the positive signal — if a title matches NONE of these, it's
-# excluded even if it didn't hit a FUNCTION_EXCLUDE pattern (catches
-# ambiguous/unlisted functions rather than defaulting them in).
-FUNCTION_INCLUDE = [
-    r"software engineer", r"software developer", r"\bswe\b",
-    r"backend", r"frontend", r"front.?end", r"back.?end",
-    r"full.?stack",
-    r"devops", r"\bsre\b", r"site reliability", r"platform engineer",
-    r"infrastructure engineer", r"cloud engineer", r"systems engineer",
+# Sourced from rubric.yaml's profile.target_titles — edit the YAML, not this file.
+FUNCTION_INCLUDE = _load_target_titles()
+# Always-include safety net for common phrasing variants even if rubric.yaml's
+# list is edited down to something narrower than expected.
+FUNCTION_INCLUDE += [
+    r"\bswe\b", r"full.?stack", r"front.?end", r"back.?end",
     r"application developer", r"applications engineer",
-    r"web developer",
-    r"data engineer",
-    r"machine learning engineer", r"\bml engineer",
-    r"security engineer",
 ]
 
 # Excluded regardless of function match — not applicable to a graduated candidate
