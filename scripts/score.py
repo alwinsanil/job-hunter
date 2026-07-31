@@ -150,12 +150,68 @@ EXTRACTION_SYSTEM = """You extract structured facts from a job posting, to be \
 scored against a candidate's resume by a separate rubric engine. Be literal — \
 don't infer generosity the posting doesn't state.
 
+The candidate is based in Canada and holds a Post-Graduation Work Permit \
+(PGWP) — an OPEN work permit. This means the candidate is ALREADY fully \
+authorized to work for any employer in Canada, with no employer sponsorship \
+of any kind required for Canada-based roles. Do NOT flag "denies_sponsorship" \
+or "requires_us_only_auth" based on:
+- Generic US-specific legal/compliance boilerplate that applies only to US \
+  applicants (e.g. "US Applicants: this company participates in E-Verify", \
+  I-9 verification notices, US-specific EEO statements) — these do not deny \
+  anything to a Canada-based applicant and are not sponsorship signals at all.
+- Any language that only concerns candidates applying from outside Canada.
+Only set these fields true if the posting explicitly states sponsorship is \
+NOT available for THIS role as it would apply to a Canada-based candidate, \
+or the role explicitly requires work authorization the candidate would not \
+already have via Canadian PGWP (e.g. "must be a US citizen or green card \
+holder" for a US-based role).
+
+For location_type: be careful with city names that exist in multiple \
+countries. "London" without further qualification is ambiguous — London, \
+Ontario is a real, common location in Canadian job postings and should NOT \
+be assumed to mean London, UK. Look for a province/state or "Canada"/"United \
+Kingdom" qualifier before deciding. If genuinely ambiguous with no qualifier \
+at all, use "unclear" rather than guessing a specific country.
+
+Some postings list MULTIPLE eligible countries together in one location \
+field (e.g. "London; Canada; Europe; United States") — this means the role \
+is open to candidates in ANY of these regions, not exclusively the first \
+one listed. If "Canada" (or a Canadian city/province) appears anywhere in \
+the location field, classify as remote_canada or other_canada_onsite based \
+on whether it's remote — do NOT classify as outside_canada just because \
+other countries are also listed in the same field. This is different from \
+a posting explicitly labeled for one specific country only (e.g. "Remote \
+(United States)" as a distinct posting with no other countries mentioned) \
+— those genuinely are single-country-exclusive and should stay outside_canada.
+
+The candidate holds a Post-Graduation Work Permit (PGWP), NOT permanent \
+residency or citizenship. Set "requires_pr_or_citizenship" true ONLY if the \
+posting explicitly states the candidate must be a Canadian permanent \
+resident, Canadian citizen, or otherwise requires status a PGWP does not \
+satisfy (e.g. "must be a US citizen or green card holder"). A PGWP is a \
+valid, real work permit — do not flag this just because a posting says \
+"must be legally authorized to work in Canada" (PGWP satisfies that).
+
+Set "requires_security_clearance" true ONLY if the posting requires an \
+actual government/military security clearance (e.g. "must hold or be \
+eligible for Secret clearance", "Top Secret", "must be eligible for a \
+government security clearance", clearance tied to defense/intelligence \
+contracts). Do NOT set this true for an ordinary background check, \
+reference check, or standard pre-employment screening — those are routine \
+and the candidate can pass them. Security clearance eligibility (which \
+often itself requires citizenship) is a fundamentally different, much \
+higher bar than a background check, and conflating the two would wrongly \
+exclude postings the candidate could actually pursue. If genuinely unsure \
+which one a posting means, default to false rather than guessing true.
+
 Respond ONLY with a JSON object, no prose:
 {
   "years_required": <number, or null if not stated>,
   "title_seniority": "new_grad" | "mid" | "senior" | "staff_or_above",
   "requires_us_only_auth": <bool>,
   "denies_sponsorship": <bool>,
+  "requires_pr_or_citizenship": <bool>,
+  "requires_security_clearance": <bool>,
   "location_type": "remote_canada" | "halifax_ns_onsite" | "other_canada_onsite" | "outside_canada" | "unclear",
   "matched_stack": [<subset of the candidate's stack list that the posting explicitly mentions>],
   "unfamiliar_platforms_mentioned": [<subset of the ramp-up list the posting explicitly mentions>],
@@ -242,6 +298,14 @@ def compute_score(facts, rubric, profile):
         cap_ceiling = min(cap_ceiling or 999, 10)
         caps_triggered.append("no_canada_remote_or_onsite")
 
+    if facts.get("requires_pr_or_citizenship"):
+        cap_ceiling = min(cap_ceiling or 999, 10)
+        caps_triggered.append("requires_pr_or_citizenship")
+
+    if facts.get("requires_security_clearance"):
+        cap_ceiling = min(cap_ceiling or 999, 10)
+        caps_triggered.append("requires_security_clearance")
+
     # --- stack match ---
     matched = facts.get("matched_stack", [])
     stack_points = min(len(matched) * rubric["stack_match"]["points_per_hit"],
@@ -299,8 +363,37 @@ def compute_score(facts, rubric, profile):
     return score, tier, caps_triggered, notes
 
 
+CACHE_PATH = None  # set inside main() once REPO_ROOT is known
+CACHE_MAX_AGE_DAYS = 14  # re-score after this long, in case the JD itself changed
+
+
+def load_score_cache():
+    if not CACHE_PATH.exists():
+        return {}
+    with open(CACHE_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_score_cache(cache):
+    with open(CACHE_PATH, "w", encoding="utf-8") as f:
+        json.dump(cache, f, indent=2)
+
+
+def cache_entry_is_fresh(entry):
+    from datetime import datetime, timezone
+    try:
+        scored_at = datetime.fromisoformat(entry["scored_at"])
+    except (KeyError, ValueError):
+        return False
+    age_days = (datetime.now(timezone.utc) - scored_at).days
+    return age_days < CACHE_MAX_AGE_DAYS
+
+
 def main():
+    global CACHE_PATH
     today = today_str()
+    CACHE_PATH = REPO_ROOT / "data" / "score_cache.json"
+
     verified_path = REPO_ROOT / "data" / "verified" / f"{today}.json"
     if not verified_path.exists():
         print(f"No verified postings for {today} at {verified_path}. Run verify_posting.py first.")
@@ -317,8 +410,18 @@ def main():
     rubric = yaml.safe_load((REPO_ROOT / "rubric.yaml").read_text(encoding="utf-8"))
     profile = rubric["profile"]
 
+    cache = load_score_cache()
+    from datetime import datetime, timezone
+
     results = []
+    scored_fresh, reused_cached = 0, 0
     for posting in postings:
+        cached = cache.get(posting["url"])
+        if cached and cache_entry_is_fresh(cached):
+            results.append({**posting, **cached["result"]})
+            reused_cached += 1
+            continue
+
         try:
             facts = extract_facts(posting, resume_text, rubric)
         except (requests.RequestException, RuntimeError, json.JSONDecodeError) as e:
@@ -326,16 +429,20 @@ def main():
             continue
 
         score, tier, caps, notes = compute_score(facts, rubric, profile)
-        results.append({
-            **posting,
-            "score": score,
-            "tier": tier,
-            "caps_triggered": caps,
-            "notes": notes,
-            "facts": facts,
-        })
+        result = {"score": score, "tier": tier, "caps_triggered": caps,
+                  "notes": notes, "facts": facts}
+        results.append({**posting, **result})
+        cache[posting["url"]] = {
+            "result": result,
+            "scored_at": datetime.now(timezone.utc).isoformat(),
+        }
+        scored_fresh += 1
         print(f"  {posting['company']} — {posting['title'][:45]}: {score} ({tier})")
         time.sleep(0.5)
+
+    save_score_cache(cache)
+    print(f"\n{scored_fresh} newly scored (API calls made), {reused_cached} reused from cache "
+          f"(no API cost) — cache entries expire after {CACHE_MAX_AGE_DAYS} days.")
 
     out_dir = REPO_ROOT / "data" / "final"
     out_dir.mkdir(parents=True, exist_ok=True)
