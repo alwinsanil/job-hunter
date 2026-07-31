@@ -50,7 +50,6 @@ FUNCTION_EXCLUDE = [
     r"\bdesigner\b", r"\bux\b", r"\bui designer",
     r"product manager", r"product marketing",
     r"\boperations\b", r"revenue operations", r"deal desk",
-    r"business intelligence analyst", r"\bdata analyst\b",
     r"solutions architect", r"sales engineer", r"forward deployed engineer",
     r"quality assurance engineer", r"\bqa\b(?!.*engineer.*automation)",  # generic QA excluded, automation QA still fuzzy
 ]
@@ -59,8 +58,10 @@ import yaml
 from pathlib import Path
 
 def _load_target_titles():
-    """rubric.yaml's profile.target_titles is the real source of truth
-    for what counts as a target function. This returns a list of regex patterns to match against job titles."""
+    """rubric.yaml's profile.target_titles is now the real source of truth
+    for what counts as a target function — previously this file had its own
+    hardcoded FUNCTION_INCLUDE list that rubric.yaml's target_titles field
+    never actually fed into, so editing rubric.yaml silently did nothing."""
     rubric_path = Path(__file__).resolve().parent.parent / "rubric.yaml"
     rubric = yaml.safe_load(rubric_path.read_text(encoding="utf-8"))
     titles = rubric.get("profile", {}).get("target_titles", [])
@@ -76,11 +77,24 @@ def _load_target_titles():
 # Must match at least one of these to be considered a plausible target role.
 # Sourced from rubric.yaml's profile.target_titles — edit the YAML, not this file.
 FUNCTION_INCLUDE = _load_target_titles()
-# Always-include safety net for common phrasing variants even if rubric.yaml's
-# list is edited down to something narrower than expected.
+# Always-include safety net — this is the REAL baseline coverage, not just a
+# few extra variants. rubric.yaml's target_titles is additive on top of this,
+# never a replacement — editing target_titles down (as happened once already,
+# dropping DevOps/SRE/Infrastructure Engineer coverage and silently excluding
+# real matching postings like StackAdapt's actual DevOps Engineer listing)
+# must never again be able to remove core coverage without editing this file
+# directly and deliberately.
 FUNCTION_INCLUDE += [
     r"\bswe\b", r"full.?stack", r"front.?end", r"back.?end",
     r"application developer", r"applications engineer",
+    r"devops", r"\bsre\b", r"site reliability", r"platform engineer",
+    r"infrastructure engineer", r"cloud engineer", r"systems engineer",
+    r"web developer", r"data engineer",
+    r"machine learning engineer", r"\bml engineer",
+    r"security engineer",
+    r"\bios engineer\b", r"\bandroid engineer\b", r"mobile engineer",
+    r"software development engineer", r"\bsdet\b", r"test engineer",
+    r"business intelligence analyst", r"\bdata analyst\b",
 ]
 
 # Excluded regardless of function match — not applicable to a graduated candidate

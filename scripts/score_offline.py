@@ -40,6 +40,27 @@ US_ONLY_PATTERNS = [
     r"not able to provide (?:visa )?sponsorship",
 ]
 
+# A PGWP satisfies "authorized to work in Canada" — only flag if a posting
+# explicitly requires PR/citizenship specifically, which PGWP does not cover.
+PR_CITIZENSHIP_PATTERNS = [
+    r"must be (?:a )?canadian (?:permanent resident|citizen)",
+    r"canadian pr (?:or citizen)?(?: status)? required",
+    r"permanent resident(?:ship)? (?:or citizen(?:ship)?)? required",
+    r"must be a u\.?s\.? citizen or green card holder",
+]
+
+# Deliberately narrow — a government/military security clearance is a much
+# higher, different bar than an ordinary background check, and the candidate
+# can pass a routine background check. Don't let "background check" or
+# "reference check" phrasing false-trigger this.
+SECURITY_CLEARANCE_PATTERNS = [
+    r"security clearance",
+    r"\btop secret\b",
+    r"\bsecret clearance\b",
+    r"eligib\w* for (?:a )?(?:government )?(?:security )?clearance",
+    r"clearance (?:required|eligibility|eligible)",
+]
+
 AI_WORKFLOW_PATTERNS = [r"\bai[\s-]?assisted\b", r"copilot", r"claude code", r"llm", r"machine learning tool"]
 WCAG_PATTERNS = [r"\bwcag\b", r"accessibility", r"a11y"]
 SMALL_TEAM_PATTERNS = [r"small team", r"wear many hats", r"full ownership", r"fast-?paced startup",
@@ -78,16 +99,22 @@ def classify_location(location_field):
     loc = location_field.lower()
     is_remote = bool(re.search(r"\bremote\b", loc))
 
+    # Multi-region postings (e.g. "London; Canada; Europe; United States")
+    # list several eligible countries in ONE posting — meaning any of them
+    # works, not that the role is exclusive to whichever appears first. This
+    # differs from Tailscale-style separate postings per country, where each
+    # listing genuinely IS exclusive to one region. So: check for Canada
+    # FIRST, before any US/UK exclusivity check — checking US/UK first would
+    # wrongly reject a posting that also lists Canada as an eligible option.
+    if "canada" in loc or any(city in loc for city in CANADIAN_CITIES):
+        if any(city in loc for city in ("halifax", "dartmouth", "bedford")) or "nova scotia" in loc:
+            return "halifax_ns_onsite"
+        return "remote_canada" if is_remote else "other_canada_onsite"
+
     if any(m in loc for m in US_MARKERS):
         return "outside_canada"
     if any(m in loc for m in UK_MARKERS):
         return "outside_canada"
-    if any(city in loc for city in ("halifax", "dartmouth", "bedford")) or "nova scotia" in loc:
-        return "halifax_ns_onsite"
-    if "canada" in loc:
-        return "remote_canada" if is_remote else "other_canada_onsite"
-    if any(city in loc for city in CANADIAN_CITIES):
-        return "remote_canada" if is_remote else "other_canada_onsite"
     if is_remote:
         return "unclear"  # remote but no country signal at all — don't guess
     return "unclear"
@@ -134,16 +161,6 @@ KEYWORD_SYNONYMS = {
     "PostgreSQL": ["PostgreSQL", "Postgres"],
     "JavaScript": ["JavaScript", "JS"],
     "Node.js": ["Node.js", "Node", "NodeJS"],
-    "React": ["React", "ReactJS", "React.js"],
-    "TypeScript": ["TypeScript", "TS"],
-    "C#": ["C#", "C Sharp"],
-    ".NET": [".NET", "DotNet"],
-    "CI/CD": ["CI/CD", "Continuous Integration", "Continuous Delivery"],
-    "AWS": ["AWS", "Amazon Web Services"],
-    "GCP": ["GCP", "Google Cloud Platform"],
-    "Azure": ["Azure", "Microsoft Azure"],
-    "Docker": ["Docker", "Containerization"],
-    "Terraform": ["Terraform", "Infrastructure-as-Code", "IaC", "I-a-C"],
 }
 
 
@@ -160,6 +177,8 @@ def extract_facts_offline(posting, rubric):
         "title_seniority": classify_seniority(posting["title"]),
         "requires_us_only_auth": _search_any(US_ONLY_PATTERNS, jd_text),
         "denies_sponsorship": _search_any(US_ONLY_PATTERNS, jd_text),  # same signal set, regex can't reliably split these
+        "requires_pr_or_citizenship": _search_any(PR_CITIZENSHIP_PATTERNS, jd_text),
+        "requires_security_clearance": _search_any(SECURITY_CLEARANCE_PATTERNS, jd_text),
         "location_type": classify_location(posting.get("location", "")),
         "matched_stack": matched_stack,
         "unfamiliar_platforms_mentioned": unfamiliar,
