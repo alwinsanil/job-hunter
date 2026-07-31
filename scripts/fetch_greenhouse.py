@@ -46,7 +46,19 @@ def fetch_company(company_row):
 
     postings = []
     for job in data.get("jobs", []):
-        location = (job.get("location") or {}).get("name", "unknown")
+        # Same risk pattern found in Ashby's fetcher: Greenhouse also splits
+        # a single display "location.name" field from a separate "offices"
+        # array listing every office/region a job is actually posted to.
+        # Reading only "location.name" can miss real eligible regions.
+        primary = (job.get("location") or {}).get("name", "unknown")
+        office_names = [o.get("name", "") for o in job.get("offices", []) if o.get("name")]
+        # dedupe while preserving order, primary first
+        seen_locs = []
+        for loc in [primary] + office_names:
+            if loc and loc not in seen_locs:
+                seen_locs.append(loc)
+        location = "; ".join(seen_locs) if len(seen_locs) > 1 else primary
+
         postings.append(make_posting(
             company=company_row["company"],
             title=job.get("title", "").strip(),

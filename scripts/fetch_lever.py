@@ -44,6 +44,12 @@ def fetch_company(company_row):
     postings = []
     for job in data:
         categories = job.get("categories", {})
+        # workplaceType is a real, documented Lever field (remote/hybrid/
+        # on-site) — more reliable for remote detection than parsing the
+        # word "remote" out of a location string. Captured here even though
+        # classify_location() doesn't consume it yet, so it's available if
+        # a real posting turns out to need it.
+        workplace_type = job.get("workplaceType", "")
         postings.append(make_posting(
             company=company_row["company"],
             title=job.get("text", "").strip(),
@@ -53,7 +59,8 @@ def fetch_company(company_row):
             raw={"id": job.get("id"), "createdAt": job.get("createdAt"),
                  "jd_html": job.get("description", ""),
                  "jd_plain": job.get("descriptionPlain", ""),
-                 "jd_lists_raw": job.get("lists", [])},  # requirements/responsibilities sections
+                 "jd_lists_raw": job.get("lists", []),  # requirements/responsibilities sections
+                 "workplace_type": workplace_type},
         ))
     return postings
 

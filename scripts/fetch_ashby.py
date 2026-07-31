@@ -43,7 +43,15 @@ def fetch_company(company_row):
 
     postings = []
     for job in data.get("jobs", []):
-        location = job.get("location", "unknown")
+        # Ashby returns a single primary "location" field plus a separate
+        # "secondaryLocations" array for multi-region postings. Only
+        # reading the primary field was silently dropping every other
+        # eligible location — including "Canada" specifically — from
+        # postings that were actually open to Canada-based candidates.
+        primary = job.get("location", "unknown")
+        secondary = [loc.get("location", "") for loc in job.get("secondaryLocations", []) if loc.get("location")]
+        location = "; ".join([primary] + secondary) if secondary else primary
+
         postings.append(make_posting(
             company=company_row["company"],
             title=job.get("title", "").strip(),
