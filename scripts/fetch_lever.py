@@ -78,7 +78,7 @@ def main():
         all_postings.extend(postings)
 
     new, old = dedupe_new(all_postings)
-    write_daily_raw(all_postings, "lever")
+    write_daily_raw(new, "lever")
     append_seen(new)
 
     print(f"\nLever: {len(all_postings)} total, {len(new)} new, {len(old)} already seen")
