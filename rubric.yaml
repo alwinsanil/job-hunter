@@ -45,6 +45,21 @@ hard_caps:
     action: cap_score_at 10
     reason: "Can't relocate without sponsorship, can't work onsite outside Canada"
 
+  - name: requires_pr_or_citizenship
+    if: posting_requires_canadian_pr_or_citizenship
+    action: cap_score_at 10
+    reason: "Candidate holds PGWP (open work permit), not PR/citizenship — PGWP
+      satisfies ordinary 'authorized to work in Canada' language but not an
+      explicit PR/citizenship requirement"
+
+  - name: requires_security_clearance
+    if: posting_requires_government_or_military_security_clearance
+    action: cap_score_at 10
+    reason: "Genuine security clearance (Secret/Top Secret/government
+      eligibility) is a different, much higher bar than an ordinary
+      background check, which the candidate can pass — extraction is
+      deliberately careful not to conflate the two"
+
 stack_match:
   weight_max: 25
   points_per_hit: 3
