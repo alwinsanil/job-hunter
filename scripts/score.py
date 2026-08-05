@@ -146,75 +146,33 @@ def _fetch_rendered(url):
         print(f"  [warn] playwright render failed for {url}: {e}")
         return ""
 
-EXTRACTION_SYSTEM = """You extract structured facts from a job posting, to be \
-scored against a candidate's resume by a separate rubric engine. Be literal — \
-don't infer generosity the posting doesn't state.
+EXTRACTION_SYSTEM = """Extract structured facts from a job posting for a rubric engine. Be literal; don't infer generosity not stated.
 
-The candidate is based in Canada and holds a Post-Graduation Work Permit \
-(PGWP) — an OPEN work permit. This means the candidate is ALREADY fully \
-authorized to work for any employer in Canada, with no employer sponsorship \
-of any kind required for Canada-based roles. Do NOT flag "denies_sponsorship" \
-or "requires_us_only_auth" based on:
-- Generic US-specific legal/compliance boilerplate that applies only to US \
-  applicants (e.g. "US Applicants: this company participates in E-Verify", \
-  I-9 verification notices, US-specific EEO statements) — these do not deny \
-  anything to a Canada-based applicant and are not sponsorship signals at all.
-- Any language that only concerns candidates applying from outside Canada.
-Only set these fields true if the posting explicitly states sponsorship is \
-NOT available for THIS role as it would apply to a Canada-based candidate, \
-or the role explicitly requires work authorization the candidate would not \
-already have via Canadian PGWP (e.g. "must be a US citizen or green card \
-holder" for a US-based role).
+CANDIDATE: Canada-based, holds PGWP (open work permit) — already authorized for any Canadian employer, no sponsorship needed.
 
-For location_type: be careful with city names that exist in multiple \
-countries. "London" without further qualification is ambiguous — London, \
-Ontario is a real, common location in Canadian job postings and should NOT \
-be assumed to mean London, UK. Look for a province/state or "Canada"/"United \
-Kingdom" qualifier before deciding. If genuinely ambiguous with no qualifier \
-at all, use "unclear" rather than guessing a specific country.
+denies_sponsorship / requires_us_only_auth: true ONLY if posting explicitly denies sponsorship for a Canada-based candidate, or requires status PGWP doesn't cover (e.g. "must be US citizen/green card holder" for a US role). Ignore generic US-only boilerplate (E-Verify, I-9, US EEO notices) — irrelevant to a CA candidate.
 
-Some postings list MULTIPLE eligible countries together in one location \
-field (e.g. "London; Canada; Europe; United States") — this means the role \
-is open to candidates in ANY of these regions, not exclusively the first \
-one listed. If "Canada" (or a Canadian city/province) appears anywhere in \
-the location field, classify as remote_canada or other_canada_onsite based \
-on whether it's remote — do NOT classify as outside_canada just because \
-other countries are also listed in the same field. This is different from \
-a posting explicitly labeled for one specific country only (e.g. "Remote \
-(United States)" as a distinct posting with no other countries mentioned) \
-— those genuinely are single-country-exclusive and should stay outside_canada.
+requires_pr_or_citizenship: true ONLY if posting explicitly requires Canadian PR/citizenship or non-PGWP status (e.g. "must be US citizen/green card holder"). PGWP satisfies "legally authorized to work in Canada" — don't flag for that phrase alone.
 
-The candidate holds a Post-Graduation Work Permit (PGWP), NOT permanent \
-residency or citizenship. Set "requires_pr_or_citizenship" true ONLY if the \
-posting explicitly states the candidate must be a Canadian permanent \
-resident, Canadian citizen, or otherwise requires status a PGWP does not \
-satisfy (e.g. "must be a US citizen or green card holder"). A PGWP is a \
-valid, real work permit — do not flag this just because a posting says \
-"must be legally authorized to work in Canada" (PGWP satisfies that).
+requires_security_clearance: true ONLY for actual gov/military clearance (Secret, Top Secret, defense/intel contract eligibility). NOT for routine background/reference checks. Default false if unsure.
 
-Set "requires_security_clearance" true ONLY if the posting requires an \
-actual government/military security clearance (e.g. "must hold or be \
-eligible for Secret clearance", "Top Secret", "must be eligible for a \
-government security clearance", clearance tied to defense/intelligence \
-contracts). Do NOT set this true for an ordinary background check, \
-reference check, or standard pre-employment screening — those are routine \
-and the candidate can pass them. Security clearance eligibility (which \
-often itself requires citizenship) is a fundamentally different, much \
-higher bar than a background check, and conflating the two would wrongly \
-exclude postings the candidate could actually pursue. If genuinely unsure \
-which one a posting means, default to false rather than guessing true.
+location_type: watch for ambiguous city names (e.g. "London" = London ON unless "UK"/state qualifier says otherwise; use "unclear" if no qualifier at all). Multi-country fields (e.g. "London; Canada; Europe; US") mean ANY listed region is eligible — scan ALL entries for a Canada match before picking outside_canada. Example: "Toronto; New York" → other_canada_onsite/remote_canada (Toronto is Canadian), NOT outside_canada — one non-CA city elsewhere doesn't disqualify. Only mark outside_canada when the field is genuinely single-country and that country isn't Canada (e.g. "Remote (United States)" alone).
 
-Respond ONLY with a JSON object, no prose:
+employment_type: full_time | part_time | contract | unclear. hours_per_week: <number or null>.
+
+JSON only, no prose:
 {
-  "years_required": <number, or null if not stated>,
-  "title_seniority": "new_grad" | "mid" | "senior" | "staff_or_above",
+  "years_required": <number|null>,
+  "title_seniority": "new_grad"|"mid"|"senior"|"staff_or_above",
   "requires_us_only_auth": <bool>,
   "denies_sponsorship": <bool>,
   "requires_pr_or_citizenship": <bool>,
   "requires_security_clearance": <bool>,
-  "location_type": "remote_canada" | "halifax_ns_onsite" | "other_canada_onsite" | "outside_canada" | "unclear",
-  "matched_stack": [<subset of the candidate's stack list that the posting explicitly mentions>],
-  "unfamiliar_platforms_mentioned": [<subset of the ramp-up list the posting explicitly mentions>],
+  "location_type": "remote_canada"|"halifax_ns_onsite"|"other_canada_onsite"|"outside_canada"|"unclear",
+  "employment_type": "full_time"|"part_time"|"contract"|"unclear",
+  "hours_per_week": <number|null>,
+  "matched_stack": [<subset of candidate stack list explicitly mentioned>],
+  "unfamiliar_platforms_mentioned": [<subset of ramp-up list explicitly mentioned>],
   "ai_in_daily_workflow": <bool>,
   "accessibility_or_wcag_mentioned": <bool>,
   "small_team_full_ownership_signal": <bool>

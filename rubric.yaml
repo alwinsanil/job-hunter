@@ -60,6 +60,11 @@ hard_caps:
       background check, which the candidate can pass — extraction is
       deliberately careful not to conflate the two"
 
+  - name: part_time_or_contract
+    if: employment_type in [part_time, contract] AND hours_per_week < 30
+    action: cap_score_at 40
+    reason: "Open to contract, but part-time low-hour gigs shouldn't rank as apply_first"
+
 stack_match:
   weight_max: 25
   points_per_hit: 3
