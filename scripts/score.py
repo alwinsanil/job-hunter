@@ -268,8 +268,11 @@ def compute_score(facts, rubric, profile):
         cap_ceiling = min(cap_ceiling or 999, 10)
         caps_triggered.append("requires_security_clearance")
 
+    stack_list = sum(rubric["stack_match"]["strong_signals"].values(), [])
+    ramp_list = rubric["ramp_up_penalty"]["unfamiliar_platforms"]
+
     # --- stack match ---
-    matched = facts.get("matched_stack", [])
+    matched = [s for s in facts.get("matched_stack", []) if s in stack_list]
     stack_points = min(len(matched) * rubric["stack_match"]["points_per_hit"],
                         rubric["stack_match"]["weight_max"])
     score += stack_points
@@ -277,7 +280,7 @@ def compute_score(facts, rubric, profile):
         notes.append(f"stack match: {', '.join(matched)} (+{stack_points})")
 
     # --- ramp-up penalty ---
-    unfamiliar = facts.get("unfamiliar_platforms_mentioned", [])
+    unfamiliar = [s for s in facts.get("unfamiliar_platforms_mentioned", []) if s in ramp_list]
     penalty = max(len(unfamiliar) * rubric["ramp_up_penalty"]["points_per_hit"],
                   rubric["ramp_up_penalty"]["weight_max"])
     score += penalty
