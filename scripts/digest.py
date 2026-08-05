@@ -2,8 +2,9 @@
 Build today's digest from data/final/<today>.json.
 
 Output: digests/<today>.md — sorted apply_first > worth_a_look > skip (collapsed).
-Also merges today's URLs into data/seen_postings.json so tomorrow's fetch
-scripts don't re-surface the same postings.
+Renders each tier as a markdown table instead of a flat bullet/comma list —
+much easier to scan. Also merges today's URLs into data/seen_postings.json so
+tomorrow's fetch scripts don't re-surface the same postings.
 """
 import json
 import sys
@@ -11,11 +12,44 @@ import sys
 from common import REPO_ROOT, DIGEST_DIR, today_str
 
 
-def format_row(p):
-    caps = f" ⚠ {', '.join(p['caps_triggered'])}" if p["caps_triggered"] else ""
-    notes = "; ".join(p["notes"]) if p["notes"] else ""
-    return (f"- **[{p['company']}]({p['url']})** — {p['title']} — "
-            f"**{p['score']}**{caps}\n  - {p['location']} · {notes}")
+def esc(text):
+    """Escape pipe characters so they don't break table cells."""
+    return str(text).replace("|", "\\|") if text else ""
+
+
+def split_notes(notes_list):
+    """Pull out stack-match / ramp-up / bonus / location notes into separate
+    short fields so the table doesn't need one giant run-on notes column."""
+    stack, ramp, bonuses = "", "", []
+    for n in notes_list:
+        if n.startswith("stack match:"):
+            stack = n.replace("stack match:", "").strip()
+        elif n.startswith("ramp-up:"):
+            ramp = n.replace("ramp-up:", "").strip()
+        else:
+            bonuses.append(n)
+    return stack, ramp, "; ".join(bonuses)
+
+
+def format_table(postings):
+    if not postings:
+        return "*None today.*\n"
+
+    header = (
+        "| Score | Company | Title | Location | Stack Match | Ramp-Up | Other | Flags |\n"
+        "|---|---|---|---|---|---|---|---|\n"
+    )
+    rows = []
+    for p in postings:
+        stack, ramp, bonuses = split_notes(p.get("notes", []))
+        flags = ", ".join(p.get("caps_triggered", [])) or "—"
+        title_link = f"[{esc(p['title'])}]({p['url']})"
+        rows.append(
+            f"| **{p['score']}** | {esc(p['company'])} | {title_link} | "
+            f"{esc(p['location'])} | {esc(stack) or '—'} | {esc(ramp) or '—'} | "
+            f"{esc(bonuses) or '—'} | {flags} |"
+        )
+    return header + "\n".join(rows) + "\n"
 
 
 def main():
@@ -37,18 +71,16 @@ def main():
 
     lines = [f"# Digest {today}", ""]
 
-    lines.append(f"## Apply First ({len(apply_first)})")
-    lines.extend(format_row(p) for p in apply_first) if apply_first else lines.append("*None today.*")
-    lines.append("")
+    lines.append(f"## 🟢 Apply First ({len(apply_first)})")
+    lines.append(format_table(apply_first))
 
-    lines.append(f"## Worth a Look ({len(worth_a_look)})")
-    lines.extend(format_row(p) for p in worth_a_look) if worth_a_look else lines.append("*None today.*")
-    lines.append("")
+    lines.append(f"## 🟡 Worth a Look ({len(worth_a_look)})")
+    lines.append(format_table(worth_a_look))
 
-    lines.append(f"## Skipped ({len(skipped)})")
+    lines.append(f"## ⚪ Skipped ({len(skipped)})")
     lines.append("<details><summary>expand</summary>\n")
-    lines.extend(format_row(p) for p in skipped) if skipped else lines.append("*None today.*")
-    lines.append("\n</details>")
+    lines.append(format_table(skipped))
+    lines.append("</details>")
     lines.append("")
 
     lines.append("---")
