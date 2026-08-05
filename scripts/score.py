@@ -203,8 +203,12 @@ def call_claude(system, user_prompt, max_tokens=800):
     data = resp.json()
     text = "\n".join(b["text"] for b in data.get("content", []) if b.get("type") == "text").strip()
     if text.startswith("```"):
-        text = text.strip("`").replace("json\n", "", 1)
-    return json.loads(text)
+        text = re.sub(r"^```(?:json)?\n?", "", text)
+        text = re.sub(r"\n?```$", "", text)
+    text = text.strip()
+    decoder = json.JSONDecoder()
+    obj, _ = decoder.raw_decode(text)
+    return obj
 
 
 def extract_facts(posting, resume_text, rubric):
