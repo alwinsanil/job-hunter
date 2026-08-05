@@ -54,7 +54,7 @@ def fetch_company(company_row):
             company=company_row["company"],
             title=job.get("text", "").strip(),
             url=job.get("hostedUrl", ""),
-            location=categories.get("location", "unknown"),
+            location=(categories.get("location") or "unknown").strip(),
             ats_source="lever",
             raw={"id": job.get("id"), "createdAt": job.get("createdAt"),
                  "jd_html": job.get("description", ""),

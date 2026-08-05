@@ -50,7 +50,12 @@ def fetch_company(company_row):
         # postings that were actually open to Canada-based candidates.
         primary = job.get("location", "unknown")
         secondary = [loc.get("location", "") for loc in job.get("secondaryLocations", []) if loc.get("location")]
-        location = "; ".join([primary] + secondary) if secondary else primary
+        seen_locs = []
+        for loc in [primary] + secondary:
+            loc = loc.strip()
+            if loc and loc not in seen_locs:
+                seen_locs.append(loc)
+        location = "; ".join(seen_locs) if len(seen_locs) > 1 else primary
 
         postings.append(make_posting(
             company=company_row["company"],

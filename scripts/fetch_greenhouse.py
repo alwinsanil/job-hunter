@@ -55,6 +55,7 @@ def fetch_company(company_row):
         # dedupe while preserving order, primary first
         seen_locs = []
         for loc in [primary] + office_names:
+            loc = loc.strip()
             if loc and loc not in seen_locs:
                 seen_locs.append(loc)
         location = "; ".join(seen_locs) if len(seen_locs) > 1 else primary
