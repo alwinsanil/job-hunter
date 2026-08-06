@@ -1,0 +1,54 @@
+name: Daily Job Digest
+
+on:
+  schedule:
+    - cron: '0 10 * * *'   # 10:00 UTC = 6:00 AM Halifax
+  workflow_dispatch: {}     # manual trigger button
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip3 install -r requirements.txt
+
+      - name: Fetch Greenhouse
+        run: python3 scripts/fetch_greenhouse.py
+
+      - name: Fetch Lever
+        run: python3 scripts/fetch_lever.py
+
+      - name: Fetch Ashby
+        run: python3 scripts/fetch_ashby.py
+
+      - name: Verify postings
+        run: python3 scripts/verify_posting.py
+
+      - name: Sanity check secret
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: echo "key set - ${ANTHROPIC_API_KEY:+yes}"
+
+      - name: Score postings
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 scripts/score.py
+
+      - name: Build digest
+        run: python3 scripts/digest.py
+
+      - name: Commit results
+        run: |
+          git config user.name "job-hunter-bot"
+          git config user.email "actions@github.com"
+          git add data/ digests/
+          git diff --staged --quiet || git commit -m "Daily digest $(date -u +%Y-%m-%d)"
+          git push
