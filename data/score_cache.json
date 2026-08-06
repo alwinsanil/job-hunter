@@ -2240,5 +2240,139 @@
       }
     },
     "scored_at": "2026-08-05T15:52:35.099610+00:00"
+  },
+  "https://jobs.ashbyhq.com/trulioo/ebebd57b-02a7-4816-a40c-fc4a2c014b24": {
+    "result": {
+      "score": 10,
+      "tier": "skip",
+      "caps_triggered": [
+        "sponsorship_mismatch",
+        "no_canada_remote_or_onsite"
+      ],
+      "notes": [
+        "stack match: AWS, Docker, Kubernetes, Terraform, CI/CD, GitHub Actions, Python, PostgreSQL (+24)",
+        "ramp-up: Jenkins (-5)",
+        "AI-in-workflow (+8)",
+        "small-team ownership (+3)"
+      ],
+      "facts": {
+        "years_required": 2,
+        "title_seniority": "mid",
+        "requires_us_only_auth": true,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "outside_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "AWS",
+          "Docker",
+          "Kubernetes",
+          "Terraform",
+          "CI/CD",
+          "GitHub Actions",
+          "Python",
+          "PostgreSQL"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Jenkins"
+        ],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-08-06T15:43:05.812549+00:00"
+  },
+  "https://job-boards.greenhouse.io/tailscale/jobs/4721714005": {
+    "result": {
+      "score": 80,
+      "tier": "apply_first",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: TypeScript, Python, SQL, Docker, PostgreSQL, CI/CD, REST (+21)",
+        "ramp-up: Go, Rust (-10)",
+        "AI-in-workflow (+8)",
+        "small-team ownership (+3)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": null,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "TypeScript",
+          "Python",
+          "SQL",
+          "Docker",
+          "PostgreSQL",
+          "CI/CD",
+          "REST"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go",
+          "Rust"
+        ],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-08-06T15:43:08.858960+00:00"
+  },
+  "https://job-boards.greenhouse.io/tailscale/jobs/4721713005": {
+    "result": {
+      "score": 84,
+      "tier": "apply_first",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: TypeScript, Python, AWS, Docker, Kubernetes, Terraform, PostgreSQL, MongoDB, CI/CD, GitHub Actions, REST, GraphQL, Agile (+25)",
+        "ramp-up: Go, Rust (-10)",
+        "AI-in-workflow (+8)",
+        "small-team ownership (+3)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": null,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "TypeScript",
+          "Python",
+          "AWS",
+          "Docker",
+          "Kubernetes",
+          "Terraform",
+          "PostgreSQL",
+          "MongoDB",
+          "CI/CD",
+          "GitHub Actions",
+          "REST",
+          "GraphQL",
+          "Agile"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go",
+          "Rust"
+        ],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-08-06T15:43:11.846024+00:00"
   }
 }
