@@ -51,10 +51,13 @@ def fetch_company(company_row):
         primary = job.get("location", "unknown")
         secondary = [loc.get("location", "") for loc in job.get("secondaryLocations", []) if loc.get("location")]
         seen_locs = []
+        seen_keys = set()
         for loc in [primary] + secondary:
             loc = loc.strip()
-            if loc and loc not in seen_locs:
+            key = loc.lower()
+            if loc and key not in seen_keys:
                 seen_locs.append(loc)
+                seen_keys.add(key)
         location = "; ".join(seen_locs) if len(seen_locs) > 1 else primary
 
         postings.append(make_posting(

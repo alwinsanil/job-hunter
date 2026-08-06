@@ -54,10 +54,13 @@ def fetch_company(company_row):
         office_names = [o.get("name", "") for o in job.get("offices", []) if o.get("name")]
         # dedupe while preserving order, primary first
         seen_locs = []
+        seen_keys = set()
         for loc in [primary] + office_names:
             loc = loc.strip()
-            if loc and loc not in seen_locs:
+            key = loc.lower()
+            if loc and key not in seen_keys:
                 seen_locs.append(loc)
+                seen_keys.add(key)
         location = "; ".join(seen_locs) if len(seen_locs) > 1 else primary
 
         postings.append(make_posting(
