@@ -78,7 +78,9 @@ def main():
         all_postings.extend(postings)
 
     new, old = dedupe_new(all_postings)
-    write_daily_raw(new, "lever")
+    for p in new: p["is_new"] = True
+    for p in old: p["is_new"] = False
+    write_daily_raw(new + old, "lever") 
     append_seen(new)
 
     print(f"\nLever: {len(all_postings)} total, {len(new)} new, {len(old)} already seen")
