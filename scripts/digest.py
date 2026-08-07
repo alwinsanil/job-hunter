@@ -44,6 +44,8 @@ def format_table(postings):
         stack, ramp, bonuses = split_notes(p.get("notes", []))
         flags = ", ".join(p.get("caps_triggered", [])) or "—"
         title_link = f"[{esc(p['title'])}]({p['url']})"
+        if p.get("newly_scored"):
+            title_link = "🆕 " + title_link
         rows.append(
             f"| **{p['score']}** | {esc(p['company'])} | {title_link} | "
             f"{esc(p['location'])} | {esc(stack) or '—'} | {esc(ramp) or '—'} | "
@@ -56,11 +58,11 @@ def main():
     today = today_str()
     final_path = REPO_ROOT / "data" / "final" / f"{today}.json"
     if not final_path.exists():
-        print(f"No scored postings for {today} at {final_path}. Run score.py first.")
-        return None
-
-    with open(final_path, encoding="utf-8") as f:
-        postings = json.load(f)
+        print(f"No scored postings for {today} — writing empty digest.")
+        postings = []
+    else:
+        with open(final_path, encoding="utf-8") as f:
+            postings = json.load(f)
 
     apply_first = sorted([p for p in postings if p["tier"] == "apply_first"],
                           key=lambda p: -p["score"])

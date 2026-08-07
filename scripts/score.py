@@ -369,6 +369,11 @@ def main():
 
     if not postings:
         print("No verified/live postings to score today.")
+        out_dir = REPO_ROOT / "data" / "final"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / f"{today}.json"
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump([], f, indent=2)
         return []
 
     resume_text = (REPO_ROOT / "resume" / "resume.md").read_text(encoding="utf-8")
@@ -383,7 +388,7 @@ def main():
     for posting in postings:
         cached = cache.get(posting["url"])
         if cached and cache_entry_is_fresh(cached):
-            results.append({**posting, **cached["result"]})
+            results.append({**posting, **cached["result"], "newly_scored": False})
             reused_cached += 1
             continue
 
@@ -396,7 +401,7 @@ def main():
         score, tier, caps, notes = compute_score(facts, rubric, profile)
         result = {"score": score, "tier": tier, "caps_triggered": caps,
                   "notes": notes, "facts": facts}
-        results.append({**posting, **result})
+        results.append({**posting, **result, "newly_scored": True})
         cache[posting["url"]] = {
             "result": result,
             "scored_at": datetime.now(timezone.utc).isoformat(),
