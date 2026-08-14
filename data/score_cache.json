@@ -2443,5 +2443,173 @@
       }
     },
     "scored_at": "2026-08-12T11:01:18.948392+00:00"
+  },
+  "https://jobs.ashbyhq.com/cohere/9baccd88-c051-474f-bfe8-6867fca54cee": {
+    "result": {
+      "score": 40,
+      "tier": "skip",
+      "caps_triggered": [
+        "overqualified_years"
+      ],
+      "notes": [
+        "stack match: Python, SQL, Java, Kubernetes, Docker (+15)",
+        "ramp-up: Go (-5)",
+        "AI-in-workflow (+8)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": 5,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "Python",
+          "SQL",
+          "Java",
+          "Kubernetes",
+          "Docker"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go"
+        ],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-08-14T10:58:45.821661+00:00"
+  },
+  "https://job-boards.greenhouse.io/caylent/jobs/6127592004": {
+    "result": {
+      "score": 10,
+      "tier": "skip",
+      "caps_triggered": [
+        "sponsorship_mismatch",
+        "no_canada_remote_or_onsite"
+      ],
+      "notes": [
+        "stack match: Python, TypeScript, REST, GraphQL, CI/CD, GitHub Actions, Docker, Agile (+24)",
+        "ramp-up: Jenkins (-5)"
+      ],
+      "facts": {
+        "years_required": 3,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": true,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "outside_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "Python",
+          "TypeScript",
+          "REST",
+          "GraphQL",
+          "Git",
+          "CI/CD",
+          "GitHub Actions",
+          "Docker",
+          "Agile"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Jenkins"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-08-14T10:58:52.950750+00:00"
+  },
+  "https://job-boards.greenhouse.io/caylent/jobs/6127590004": {
+    "result": {
+      "score": 10,
+      "tier": "skip",
+      "caps_triggered": [
+        "sponsorship_mismatch",
+        "no_canada_remote_or_onsite"
+      ],
+      "notes": [
+        "stack match: TypeScript, Python, REST, GraphQL, GitHub Actions, Docker, Agile (+21)",
+        "ramp-up: Jenkins (-5)"
+      ],
+      "facts": {
+        "years_required": 3,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": true,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "outside_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "TypeScript",
+          "Python",
+          "REST",
+          "GraphQL",
+          "Git",
+          "GitHub Actions",
+          "Docker",
+          "Agile"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Jenkins"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-08-14T10:59:00.535753+00:00"
+  },
+  "https://job-boards.greenhouse.io/caylent/jobs/6127591004": {
+    "result": {
+      "score": 10,
+      "tier": "skip",
+      "caps_triggered": [
+        "sponsorship_mismatch",
+        "no_canada_remote_or_onsite"
+      ],
+      "notes": [
+        "stack match: TypeScript, Python, REST, GraphQL, Docker, CI/CD, GitHub Actions, Agile (+24)",
+        "ramp-up: Jenkins (-5)"
+      ],
+      "facts": {
+        "years_required": 3,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": true,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "outside_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "TypeScript",
+          "Python",
+          "REST",
+          "GraphQL",
+          "Docker",
+          "CI/CD",
+          "GitHub Actions",
+          "Git",
+          "Agile"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Jenkins"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-08-14T10:59:06.012358+00:00"
   }
 }
