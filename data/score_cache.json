@@ -1272,6 +1272,41 @@
   },
   "https://job-boards.greenhouse.io/tailscale/jobs/4707636005": {
     "result": {
+      "score": 62,
+      "tier": "worth_a_look",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: SQL, REST (+6)",
+        "ramp-up: Go (-5)",
+        "small-team ownership (+3)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": null,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "SQL",
+          "REST"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-08-25T10:34:27.874413+00:00"
+  },
+  "https://job-boards.greenhouse.io/tailscale/jobs/4707649005": {
+    "result": {
       "score": 65,
       "tier": "worth_a_look",
       "caps_triggered": [],
@@ -1283,7 +1318,7 @@
       ],
       "facts": {
         "years_required": null,
-        "title_seniority": "mid",
+        "title_seniority": "new_grad",
         "requires_us_only_auth": false,
         "denies_sponsorship": false,
         "requires_pr_or_citizenship": false,
@@ -1304,42 +1339,7 @@
         "small_team_full_ownership_signal": true
       }
     },
-    "scored_at": "2026-08-05T15:50:36.653254+00:00"
-  },
-  "https://job-boards.greenhouse.io/tailscale/jobs/4707649005": {
-    "result": {
-      "score": 62,
-      "tier": "worth_a_look",
-      "caps_triggered": [],
-      "notes": [
-        "stack match: SQL, CI/CD (+6)",
-        "ramp-up: Go (-5)",
-        "small-team ownership (+3)",
-        "location remote_canada (+8)"
-      ],
-      "facts": {
-        "years_required": null,
-        "title_seniority": "mid",
-        "requires_us_only_auth": false,
-        "denies_sponsorship": false,
-        "requires_pr_or_citizenship": false,
-        "requires_security_clearance": false,
-        "location_type": "remote_canada",
-        "employment_type": "full_time",
-        "hours_per_week": null,
-        "matched_stack": [
-          "SQL",
-          "CI/CD"
-        ],
-        "unfamiliar_platforms_mentioned": [
-          "Go"
-        ],
-        "ai_in_daily_workflow": false,
-        "accessibility_or_wcag_mentioned": false,
-        "small_team_full_ownership_signal": true
-      }
-    },
-    "scored_at": "2026-08-05T15:50:43.521133+00:00"
+    "scored_at": "2026-08-25T10:34:30.451207+00:00"
   },
   "https://job-boards.greenhouse.io/tailscale/jobs/4707448005": {
     "result": {
