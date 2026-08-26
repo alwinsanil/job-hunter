@@ -2378,11 +2378,11 @@
   },
   "https://jobs.ashbyhq.com/cohere/96c74af4-b3d7-4960-a666-212ce4debac8": {
     "result": {
-      "score": 81,
+      "score": 87,
       "tier": "apply_first",
       "caps_triggered": [],
       "notes": [
-        "stack match: Python, REST, CI/CD, Docker (+12)",
+        "stack match: Python, TypeScript, JavaScript, REST, CI/CD, Docker (+18)",
         "AI-in-workflow (+8)",
         "small-team ownership (+3)",
         "location remote_canada (+8)"
@@ -2399,6 +2399,8 @@
         "hours_per_week": null,
         "matched_stack": [
           "Python",
+          "TypeScript",
+          "JavaScript",
           "REST",
           "CI/CD",
           "Docker"
@@ -2409,7 +2411,7 @@
         "small_team_full_ownership_signal": true
       }
     },
-    "scored_at": "2026-08-11T10:51:12.822014+00:00"
+    "scored_at": "2026-08-26T10:36:21.033284+00:00"
   },
   "https://job-boards.greenhouse.io/stackadapt/jobs/4354888009": {
     "result": {
@@ -2853,5 +2855,49 @@
       }
     },
     "scored_at": "2026-08-21T10:31:47.813952+00:00"
+  },
+  "https://jobs.lever.co/magnetforensics/8d402b0c-12b6-4114-bfc9-4ef95f4742e1": {
+    "result": {
+      "score": 86,
+      "tier": "apply_first",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: Python, JavaScript, TypeScript, React, FastAPI, GraphQL, Docker, Kubernetes, CI/CD, GitHub Actions (+25)",
+        "ramp-up: Jenkins (-5)",
+        "AI-in-workflow (+8)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": 2,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "Python",
+          "Git",
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "FastAPI",
+          "GraphQL",
+          "Docker",
+          "Kubernetes",
+          "CI/CD",
+          "GitHub Actions"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Jenkins"
+        ],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-08-26T10:36:12.755174+00:00"
   }
 }
