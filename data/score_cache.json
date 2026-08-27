@@ -2415,11 +2415,12 @@
   },
   "https://job-boards.greenhouse.io/stackadapt/jobs/4354888009": {
     "result": {
-      "score": 75,
+      "score": 79,
       "tier": "apply_first",
       "caps_triggered": [],
       "notes": [
-        "stack match: Python, SQL, Agile (+9)",
+        "stack match: Python, SQL, PostgreSQL, AWS, CI/CD, REST (+18)",
+        "ramp-up: Kafka (-5)",
         "AI-in-workflow (+8)",
         "location remote_canada (+8)"
       ],
@@ -2436,16 +2437,20 @@
         "matched_stack": [
           "Python",
           "SQL",
-          "Tableau",
-          "Agile"
+          "PostgreSQL",
+          "AWS",
+          "CI/CD",
+          "REST"
         ],
-        "unfamiliar_platforms_mentioned": [],
+        "unfamiliar_platforms_mentioned": [
+          "Kafka"
+        ],
         "ai_in_daily_workflow": true,
         "accessibility_or_wcag_mentioned": false,
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-12T11:01:18.948392+00:00"
+    "scored_at": "2026-08-27T20:11:16.978573+00:00"
   },
   "https://jobs.ashbyhq.com/cohere/9baccd88-c051-474f-bfe8-6867fca54cee": {
     "result": {
