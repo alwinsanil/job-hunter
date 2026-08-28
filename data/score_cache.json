@@ -2490,7 +2490,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-14T10:58:45.821661+00:00"
+    "scored_at": "2026-08-28T21:08:05.085127+00:00"
   },
   "https://job-boards.greenhouse.io/caylent/jobs/6127592004": {
     "result": {
@@ -2501,7 +2501,7 @@
         "no_canada_remote_or_onsite"
       ],
       "notes": [
-        "stack match: Python, TypeScript, REST, GraphQL, CI/CD, GitHub Actions, Docker, Agile (+24)",
+        "stack match: TypeScript, Python, REST, GraphQL, GitHub Actions, Agile (+18)",
         "ramp-up: Jenkins (-5)"
       ],
       "facts": {
@@ -2515,14 +2515,12 @@
         "employment_type": "full_time",
         "hours_per_week": null,
         "matched_stack": [
-          "Python",
           "TypeScript",
+          "Python",
           "REST",
           "GraphQL",
           "Git",
-          "CI/CD",
           "GitHub Actions",
-          "Docker",
           "Agile"
         ],
         "unfamiliar_platforms_mentioned": [
@@ -2533,7 +2531,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-14T10:58:52.950750+00:00"
+    "scored_at": "2026-08-28T21:08:20.887184+00:00"
   },
   "https://job-boards.greenhouse.io/caylent/jobs/6127590004": {
     "result": {
@@ -2544,7 +2542,7 @@
         "no_canada_remote_or_onsite"
       ],
       "notes": [
-        "stack match: TypeScript, Python, REST, GraphQL, GitHub Actions, Docker, Agile (+21)",
+        "stack match: JavaScript, TypeScript, Python, REST, GraphQL, Docker, GitHub Actions, Agile (+24)",
         "ramp-up: Jenkins (-5)"
       ],
       "facts": {
@@ -2558,13 +2556,14 @@
         "employment_type": "full_time",
         "hours_per_week": null,
         "matched_stack": [
+          "JavaScript",
           "TypeScript",
           "Python",
           "REST",
           "GraphQL",
-          "Git",
-          "GitHub Actions",
           "Docker",
+          "GitHub Actions",
+          "Git",
           "Agile"
         ],
         "unfamiliar_platforms_mentioned": [
@@ -2575,7 +2574,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-14T10:59:00.535753+00:00"
+    "scored_at": "2026-08-28T21:08:13.717382+00:00"
   },
   "https://job-boards.greenhouse.io/caylent/jobs/6127591004": {
     "result": {
@@ -2586,7 +2585,7 @@
         "no_canada_remote_or_onsite"
       ],
       "notes": [
-        "stack match: TypeScript, Python, REST, GraphQL, Docker, CI/CD, GitHub Actions, Agile (+24)",
+        "stack match: Python, TypeScript, REST, GraphQL, GitHub Actions, Docker, Agile (+21)",
         "ramp-up: Jenkins (-5)"
       ],
       "facts": {
@@ -2600,14 +2599,13 @@
         "employment_type": "full_time",
         "hours_per_week": null,
         "matched_stack": [
-          "TypeScript",
           "Python",
+          "TypeScript",
           "REST",
           "GraphQL",
-          "Docker",
-          "CI/CD",
-          "GitHub Actions",
           "Git",
+          "GitHub Actions",
+          "Docker",
           "Agile"
         ],
         "unfamiliar_platforms_mentioned": [
@@ -2618,7 +2616,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-14T10:59:06.012358+00:00"
+    "scored_at": "2026-08-28T21:08:27.484032+00:00"
   },
   "https://jobs.ashbyhq.com/cohere/876a2d31-e6c3-497b-9c8e-0b7d111fb4cd": {
     "result": {
