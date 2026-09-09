@@ -2383,11 +2383,11 @@
   },
   "https://jobs.ashbyhq.com/cohere/96c74af4-b3d7-4960-a666-212ce4debac8": {
     "result": {
-      "score": 87,
+      "score": 81,
       "tier": "apply_first",
       "caps_triggered": [],
       "notes": [
-        "stack match: Python, TypeScript, JavaScript, REST, CI/CD, Docker (+18)",
+        "stack match: Python, REST, CI/CD, Docker (+12)",
         "AI-in-workflow (+8)",
         "small-team ownership (+3)",
         "location remote_canada (+8)"
@@ -2404,8 +2404,6 @@
         "hours_per_week": null,
         "matched_stack": [
           "Python",
-          "TypeScript",
-          "JavaScript",
           "REST",
           "CI/CD",
           "Docker"
@@ -2416,7 +2414,7 @@
         "small_team_full_ownership_signal": true
       }
     },
-    "scored_at": "2026-08-26T10:36:21.033284+00:00"
+    "scored_at": "2026-09-09T14:13:26.830657+00:00"
   },
   "https://job-boards.greenhouse.io/stackadapt/jobs/4354888009": {
     "result": {
@@ -2876,7 +2874,7 @@
       "tier": "apply_first",
       "caps_triggered": [],
       "notes": [
-        "stack match: Python, JavaScript, TypeScript, React, FastAPI, GraphQL, Docker, Kubernetes, CI/CD, GitHub Actions (+25)",
+        "stack match: Python, JavaScript, TypeScript, React, FastAPI, Docker, Kubernetes, CI/CD, GitHub Actions, GraphQL (+25)",
         "ramp-up: Jenkins (-5)",
         "AI-in-workflow (+8)",
         "location remote_canada (+8)"
@@ -2893,16 +2891,16 @@
         "hours_per_week": null,
         "matched_stack": [
           "Python",
-          "Git",
           "JavaScript",
           "TypeScript",
           "React",
           "FastAPI",
-          "GraphQL",
           "Docker",
           "Kubernetes",
           "CI/CD",
-          "GitHub Actions"
+          "GitHub Actions",
+          "GraphQL",
+          "Git"
         ],
         "unfamiliar_platforms_mentioned": [
           "Jenkins"
@@ -2912,7 +2910,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-26T10:36:12.755174+00:00"
+    "scored_at": "2026-09-09T14:13:20.334668+00:00"
   },
   "https://jobs.ashbyhq.com/relay/5a6ed15f-e610-4d09-9fd7-f18cd639c4e7": {
     "result": {
@@ -3034,5 +3032,86 @@
       }
     },
     "scored_at": "2026-09-04T14:03:31.005585+00:00"
+  },
+  "https://jobs.ashbyhq.com/1password/f51cc73a-fde2-4686-b54b-f183cdaedb45": {
+    "result": {
+      "score": 71,
+      "tier": "worth_a_look",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: TypeScript, Docker, CI/CD, GitHub Actions (+12)",
+        "ramp-up: Go, Rust (-10)",
+        "AI-in-workflow (+8)",
+        "small-team ownership (+3)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": null,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "TypeScript",
+          "Docker",
+          "CI/CD",
+          "GitHub Actions",
+          "Testing"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go",
+          "Rust"
+        ],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-09-09T14:13:23.316879+00:00"
+  },
+  "https://job-boards.greenhouse.io/clear/jobs/8148139": {
+    "result": {
+      "score": 10,
+      "tier": "skip",
+      "caps_triggered": [
+        "overqualified_years",
+        "sponsorship_mismatch",
+        "no_canada_remote_or_onsite"
+      ],
+      "notes": [
+        "stack match: Python, SQL, AWS, CI/CD, GitHub Actions (+15)",
+        "ramp-up: Kafka, Jenkins (-10)"
+      ],
+      "facts": {
+        "years_required": 4,
+        "title_seniority": "mid",
+        "requires_us_only_auth": true,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "outside_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "Python",
+          "SQL",
+          "AWS",
+          "CI/CD",
+          "GitHub Actions"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Kafka",
+          "Jenkins"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-09-09T14:13:34.730956+00:00"
   }
 }
