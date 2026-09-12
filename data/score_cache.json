@@ -2459,7 +2459,7 @@
         "overqualified_years"
       ],
       "notes": [
-        "stack match: Python, SQL, Java, Kubernetes, Docker (+15)",
+        "stack match: Python, SQL, Java, Kubernetes (+12)",
         "ramp-up: Go (-5)",
         "AI-in-workflow (+8)",
         "location remote_canada (+8)"
@@ -2478,8 +2478,7 @@
           "Python",
           "SQL",
           "Java",
-          "Kubernetes",
-          "Docker"
+          "Kubernetes"
         ],
         "unfamiliar_platforms_mentioned": [
           "Go"
@@ -2489,7 +2488,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-28T21:08:05.085127+00:00"
+    "scored_at": "2026-09-12T13:23:35.241096+00:00"
   },
   "https://job-boards.greenhouse.io/caylent/jobs/6127592004": {
     "result": {
@@ -2500,7 +2499,7 @@
         "no_canada_remote_or_onsite"
       ],
       "notes": [
-        "stack match: TypeScript, Python, REST, GraphQL, GitHub Actions, Agile (+18)",
+        "stack match: Python, TypeScript, REST, GraphQL, CI/CD, GitHub Actions, Docker, Agile (+24)",
         "ramp-up: Jenkins (-5)"
       ],
       "facts": {
@@ -2514,12 +2513,14 @@
         "employment_type": "full_time",
         "hours_per_week": null,
         "matched_stack": [
-          "TypeScript",
           "Python",
+          "TypeScript",
           "REST",
           "GraphQL",
           "Git",
+          "CI/CD",
           "GitHub Actions",
+          "Docker",
           "Agile"
         ],
         "unfamiliar_platforms_mentioned": [
@@ -2530,7 +2531,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-28T21:08:20.887184+00:00"
+    "scored_at": "2026-09-12T13:24:06.712738+00:00"
   },
   "https://job-boards.greenhouse.io/caylent/jobs/6127590004": {
     "result": {
@@ -2541,7 +2542,7 @@
         "no_canada_remote_or_onsite"
       ],
       "notes": [
-        "stack match: JavaScript, TypeScript, Python, REST, GraphQL, Docker, GitHub Actions, Agile (+24)",
+        "stack match: TypeScript, Python, REST, GraphQL, Docker, CI/CD, GitHub Actions, Agile (+24)",
         "ramp-up: Jenkins (-5)"
       ],
       "facts": {
@@ -2555,14 +2556,14 @@
         "employment_type": "full_time",
         "hours_per_week": null,
         "matched_stack": [
-          "JavaScript",
           "TypeScript",
           "Python",
           "REST",
           "GraphQL",
-          "Docker",
-          "GitHub Actions",
           "Git",
+          "Docker",
+          "CI/CD",
+          "GitHub Actions",
           "Agile"
         ],
         "unfamiliar_platforms_mentioned": [
@@ -2573,7 +2574,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-28T21:08:13.717382+00:00"
+    "scored_at": "2026-09-12T13:23:52.555756+00:00"
   },
   "https://job-boards.greenhouse.io/caylent/jobs/6127591004": {
     "result": {
@@ -2584,7 +2585,7 @@
         "no_canada_remote_or_onsite"
       ],
       "notes": [
-        "stack match: Python, TypeScript, REST, GraphQL, GitHub Actions, Docker, Agile (+21)",
+        "stack match: TypeScript, Python, REST, GraphQL, Docker, GitHub Actions, Agile (+21)",
         "ramp-up: Jenkins (-5)"
       ],
       "facts": {
@@ -2598,13 +2599,13 @@
         "employment_type": "full_time",
         "hours_per_week": null,
         "matched_stack": [
-          "Python",
           "TypeScript",
+          "Python",
           "REST",
           "GraphQL",
+          "Docker",
           "Git",
           "GitHub Actions",
-          "Docker",
           "Agile"
         ],
         "unfamiliar_platforms_mentioned": [
@@ -2615,7 +2616,7 @@
         "small_team_full_ownership_signal": false
       }
     },
-    "scored_at": "2026-08-28T21:08:27.484032+00:00"
+    "scored_at": "2026-09-12T13:23:59.637812+00:00"
   },
   "https://jobs.ashbyhq.com/cohere/876a2d31-e6c3-497b-9c8e-0b7d111fb4cd": {
     "result": {
@@ -3337,5 +3338,75 @@
       }
     },
     "scored_at": "2026-09-11T14:07:10.464027+00:00"
+  },
+  "https://job-boards.greenhouse.io/tailscale/jobs/4733177005": {
+    "result": {
+      "score": 62,
+      "tier": "worth_a_look",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: SQL, CI/CD (+6)",
+        "ramp-up: Go (-5)",
+        "small-team ownership (+3)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": null,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "SQL",
+          "CI/CD"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-09-12T13:23:42.232724+00:00"
+  },
+  "https://job-boards.greenhouse.io/tailscale/jobs/4733183005": {
+    "result": {
+      "score": 62,
+      "tier": "worth_a_look",
+      "caps_triggered": [],
+      "notes": [
+        "stack match: SQL, REST (+6)",
+        "ramp-up: Go (-5)",
+        "small-team ownership (+3)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": null,
+        "title_seniority": "mid",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "SQL",
+          "REST"
+        ],
+        "unfamiliar_platforms_mentioned": [
+          "Go"
+        ],
+        "ai_in_daily_workflow": false,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": true
+      }
+    },
+    "scored_at": "2026-09-12T13:23:45.355689+00:00"
   }
 }
