@@ -3408,5 +3408,44 @@
       }
     },
     "scored_at": "2026-09-12T13:23:45.355689+00:00"
+  },
+  "https://jobs.ashbyhq.com/cohere/1b909aeb-1221-476f-88fe-8300a2065975": {
+    "result": {
+      "score": 35,
+      "tier": "skip",
+      "caps_triggered": [
+        "overqualified_years",
+        "seniority_mismatch"
+      ],
+      "notes": [
+        "stack match: Python, REST, AWS, Azure, Docker, CI/CD (+18)",
+        "AI-in-workflow (+8)",
+        "location remote_canada (+8)"
+      ],
+      "facts": {
+        "years_required": 5,
+        "title_seniority": "senior",
+        "requires_us_only_auth": false,
+        "denies_sponsorship": false,
+        "requires_pr_or_citizenship": false,
+        "requires_security_clearance": false,
+        "location_type": "remote_canada",
+        "employment_type": "full_time",
+        "hours_per_week": null,
+        "matched_stack": [
+          "Python",
+          "REST",
+          "AWS",
+          "Azure",
+          "Docker",
+          "CI/CD"
+        ],
+        "unfamiliar_platforms_mentioned": [],
+        "ai_in_daily_workflow": true,
+        "accessibility_or_wcag_mentioned": false,
+        "small_team_full_ownership_signal": false
+      }
+    },
+    "scored_at": "2026-09-14T16:12:39.332565+00:00"
   }
 }
